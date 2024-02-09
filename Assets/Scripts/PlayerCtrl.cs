@@ -1,47 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerCtrl : MonoBehaviour
 {
     public Vector2 inputVec;
-    public float speed = 5.0f;
+    public float speed;
 
     Rigidbody2D rigid;
-    SpriteRenderer spriter;
-    Animator anim;
 
-    void Awake()
+    void Start()
     {
-        rigid = GetComponent<Rigidbody2D>();   
-        spriter = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody2D>();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
+        //normalize -> Player Input 컴포넌트 상에서 되어있음
         Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
-
-        //rigid.AddForce(inputVec);
-
-        //rigid.velocity = inputVec;
         rigid.MovePosition(rigid.position + nextVec);
     }
 
-    void OnMove(InputValue value)
+    void OnMove(InputValue val)
     {
-        inputVec = value.Get<Vector2>();
-    }
-
-    void LateUpdate()
-    {
-        anim.SetFloat("Speed", inputVec.magnitude);
-
-        if (inputVec.x != 0)
-        {
-            spriter.flipX = inputVec.x < 0;
-        }
+        inputVec = val.Get<Vector2>();
     }
 }
