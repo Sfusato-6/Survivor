@@ -35,7 +35,6 @@ public class PlayerCtrl : MonoBehaviour
         {
             spriter.flipX = inputVec.x < 0;
 
-
         }
 
             
